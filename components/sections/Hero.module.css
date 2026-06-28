@@ -1,0 +1,153 @@
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100vh;
+  padding: 2rem 2rem 3rem;
+  overflow: hidden;
+}
+
+/* --- Titolo + Block Reveal --- */
+.titleWrapper {
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+  overflow: visible;
+}
+
+.title {
+  font-size: clamp(8rem, 18vw, 16rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+/* Singolo carattere */
+.char {
+  display: inline-block;
+  position: relative;
+  user-select: none;
+}
+
+/* Glow effect durante il reveal (variante glow) */
+.title.glow {
+  transition: text-shadow 0.8s ease-out;
+}
+
+.title.glow::after {
+  content: none;
+}
+
+/* --- Block Reveal Overlay --- */
+.blockOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.block {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--rich-mahogany);
+  border: 1px solid rgba(173, 40, 49, 0.12);
+  will-change: opacity;
+}
+
+/* --- Scramble Text --- */
+.scrambleWrapper {
+  align-self: flex-start;
+  min-height: 1.8rem;
+  display: flex;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+.scrambleText {
+  font-family: var(--font-mono);
+  font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+  color: var(--brown-red);
+  letter-spacing: 0.05em;
+}
+
+.cursor {
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--brown-red);
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* --- CTAs --- */
+.ctas {
+  align-self: flex-start;
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* --- Scroll Indicator --- */
+.scrollIndicator {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scrollLine {
+  display: block;
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(
+    to bottom,
+    var(--brown-red),
+    transparent
+  );
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1.2);
+  }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .hero {
+    padding: 1.5rem 1.5rem 2.5rem;
+  }
+
+  .title {
+    white-space: normal;
+    word-break: break-all;
+  }
+
+  .scrollIndicator {
+    right: 1.5rem;
+    bottom: 2rem;
+  }
+}

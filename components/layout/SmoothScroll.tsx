@@ -4,6 +4,13 @@ import { useEffect, type ReactNode } from "react";
 import Lenis from "lenis";
 import styles from "./SmoothScroll.module.css";
 
+// Espone Lenis globalmente per permettere scrollTo da qualsiasi componente
+declare global {
+  interface Window {
+    __lenis?: Lenis;
+  }
+}
+
 interface SmoothScrollProps {
   children: ReactNode;
 }
@@ -17,6 +24,8 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       touchMultiplier: 2,
     });
 
+    window.__lenis = lenis;
+
     let rafId: number;
 
     function raf(time: number) {
@@ -27,6 +36,7 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     rafId = requestAnimationFrame(raf);
 
     return () => {
+      window.__lenis = undefined;
       lenis.destroy();
       cancelAnimationFrame(rafId);
     };

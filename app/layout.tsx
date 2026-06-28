@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
-import GridCanvas from "@/components/background/GridCanvas";
-import SmoothScroll from "@/components/layout/SmoothScroll";
+import ClientLayout from "@/components/layout/ClientLayout";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -31,8 +30,7 @@ export default function RootLayout({
   return (
     <html lang="it" className={spaceGrotesk.variable}>
       <body>
-        <GridCanvas />
-        <SmoothScroll>{children}</SmoothScroll>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

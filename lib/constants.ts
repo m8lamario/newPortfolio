@@ -197,10 +197,10 @@ export const CONTACT_LINKS: ContactLink[] = [
 ];
 
 // --- Hero ---
-export const HERO = {
-  headline: "Building digital solutions that work.",
-  subheadline:
-    "Full-stack Developer — Next.js, TypeScript, Prisma.\nStudente, builder, appassionato di tecnologia.",
-  ctaPrimary: "Vedi i progetti",
-  ctaSecondary: "Contattami",
-};
+export const HERO_ROLES = [
+  "Full-stack Developer",
+  "Builder di soluzioni reali",
+  "Next.js & TypeScript",
+  "Appassionato di tecnologia",
+  "Studente ITIS Castelli",
+];

@@ -1,0 +1,21 @@
+.mirror {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.mirror.visible {
+  opacity: 1;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
