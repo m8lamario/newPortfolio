@@ -1,0 +1,145 @@
+/* ============================================
+   M8LA Portfolio — globals.css
+   Variabili CSS, reset, font, utility globali
+   ============================================ */
+
+/* --- CSS Custom Properties (Palette + Design Tokens) --- */
+:root {
+  /* Palette principale */
+  --rich-mahogany:   #250902;
+  --rich-mahogany-2: #38040e;
+  --black-cherry:    #640d14;
+  --dark-wine:       #800e13;
+  --brown-red:       #ad2831;
+
+  /* Colori funzionali */
+  --bg-primary:      #0a0a0a;
+  --bg-secondary:    #0f0f0f;
+  --text-primary:    #f5f0ed;
+  --text-secondary:  #b8a9a0;
+  --text-muted:      #7a6e66;
+  --accent:          var(--brown-red);
+  --accent-hover:    #c9353d;
+  --glass-bg:        rgba(37, 9, 2, 0.25);
+  --glass-border:    rgba(173, 40, 49, 0.15);
+  --glass-blur:      12px;
+
+  /* Spacing */
+  --section-gap:     6rem;
+  --container-max:   1200px;
+  --container-padding: 2rem;
+
+  /* Typography */
+  --font-primary:    'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-mono:       'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Transitions */
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint:  cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-normal: 0.3s;
+  --duration-slow:   0.6s;
+}
+
+/* --- Reset --- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis gestisce lo scroll */
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* --- Utility Classes --- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.section {
+  padding: var(--section-gap) 0;
+  position: relative;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* --- Glass Effect Utility --- */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--dark-wine);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brown-red);
+}
+
+/* --- Selection --- */
+::selection {
+  background: var(--brown-red);
+  color: var(--text-primary);
+}
