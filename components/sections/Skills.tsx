@@ -1,69 +1,202 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { SKILL_CATEGORIES } from "@/lib/constants";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
 import styles from "./Skills.module.css";
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.06 },
-  },
-};
+/* ── Dati skill Web Dev ── */
+const WEB_DEV_SKILLS = [
+  { name: "Next.js", desc: "Framework React per applicazioni web moderne" },
+  { name: "TypeScript", desc: "Tipizzazione statica per codice più solido" },
+  { name: "React", desc: "Componenti UI dinamici e reattivi" },
+  { name: "Prisma", desc: "ORM per database relazionali" },
+  { name: "SQL", desc: "Query e gestione database" },
+  { name: "CSS Modules", desc: "Stili scoped e manutenibili" },
+  { name: "Node.js", desc: "Runtime JavaScript lato server" },
+  { name: "REST API", desc: "Progettazione e consumo di API" },
+];
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 12, scale: 0.95 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.4,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  },
-};
+/* ── Dati foto ── */
+const PHOTOS = [
+  "/images/photography/1.jpg",
+  "/images/photography/2.jpg",
+  "/images/photography/3.jpg",
+  "/images/photography/4.jpg",
+  "/images/photography/5.jpg",
+  "/images/photography/6.jpg",
+  "/images/photography/7.jpg",
+  "/images/photography/8.jpg",
+  "/images/photography/9.jpg",
+  "/images/photography/10.jpg",
+];
 
-export default function Skills() {
-  const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+/* Raggruppa in righe da 3 */
+function chunk<T>(arr: T[], size: number): T[][] {
+  const result: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+  return result;
+}
+
+/* ── Singola voce skill ── */
+function SkillItem({
+  name,
+  desc,
+  isActive,
+}: {
+  name: string;
+  desc: string;
+  isActive: boolean;
+}) {
+  return (
+    <motion.div
+      className={styles.skillItem}
+      animate={{
+        opacity: isActive ? 1 : 0.25,
+      }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+    >
+      <span
+        className={styles.skillName}
+        style={{
+          color: isActive ? "var(--brown-red)" : "var(--text-primary)",
+          transition: "color 0.35s ease-out",
+        }}
+      >
+        {name}
+      </span>
+      <span className={styles.skillDesc}>{desc}</span>
+    </motion.div>
+  );
+}
+
+/* ── Sezione Fotografia ── */
+function PhotographySection() {
+  const [isPaused, setIsPaused] = useState(false);
+  const rows = chunk(PHOTOS, 3);
+  const duplicatedRows = [...rows, ...rows];
 
   return (
-    <section id="skills" ref={ref} className={styles.section}>
-      <motion.div
-        className={styles.header}
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5 }}
-      >
-        <span className={styles.label}>Cosa so fare</span>
-        <h2 className={styles.title}>Skills</h2>
-      </motion.div>
+    <div className={styles.photography}>
+      {/* Colonna sinistra — titolo */}
+      <div className={styles.photoTitleCol}>
+        <h2 className={styles.photoTitle}>Fotografia</h2>
+      </div>
 
-      <div className={styles.grid}>
-        {SKILL_CATEGORIES.map((category) => (
-          <div key={category.title} className={styles.category}>
-            <h3 className={styles.categoryTitle}>{category.title}</h3>
-            <motion.ul
-              className={styles.tags}
-              variants={containerVariants}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-            >
-              {category.skills.map((skill) => (
-                <motion.li
-                  key={skill.name}
-                  className={styles.tag}
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                >
-                  {skill.name}
-                </motion.li>
-              ))}
-            </motion.ul>
+      {/* Colonna destra — stage 3D */}
+      <div className={styles.photoStageCol}>
+        <div className={styles.photoStage}>
+          <motion.div
+            className={styles.photoTrack}
+            animate={{ y: ["0%", "-50%"] }}
+            transition={{
+              y: {
+                duration: 18,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "linear",
+              },
+            }}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            {duplicatedRows.map((row, rowIdx) => (
+              <div key={rowIdx} className={styles.photoRow}>
+                {row.map((src, colIdx) => (
+                  <div
+                    key={colIdx}
+                    className={styles.photoCard}
+                    style={{
+                      backgroundImage: `url(${src})`,
+                    }}
+                  />
+                ))}
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Componente principale ── */
+export default function Skills() {
+  const scrollColRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const updateActive = useCallback(() => {
+    const container = scrollColRef.current;
+    if (!container) return;
+
+    const viewportCenter = window.innerHeight / 2;
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    itemRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const elCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(elCenter - viewportCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = i;
+      }
+    });
+
+    setActiveIndex(closestIndex);
+  }, []);
+
+  useEffect(() => {
+    const container = scrollColRef.current;
+    if (!container) return;
+
+    window.addEventListener("scroll", updateActive, { passive: true });
+    updateActive();
+
+    return () => window.removeEventListener("scroll", updateActive);
+  }, [updateActive]);
+
+  return (
+    <section id="skills" className={styles.skills}>
+      {/* ─── Sezione 1: Web Dev ─── */}
+      <div className={styles.webDev}>
+        <div className={styles.stickyCol}>
+          <div className={styles.stickyTitle}>
+            <h2>Web Dev</h2>
           </div>
-        ))}
+        </div>
+
+        <div className={styles.scrollCol} ref={scrollColRef}>
+          <div className={styles.skillList}>
+            {WEB_DEV_SKILLS.map((skill, i) => (
+              <div
+                key={skill.name}
+                ref={(el) => {
+                  itemRefs.current[i] = el;
+                }}
+              >
+                <SkillItem
+                  name={skill.name}
+                  desc={skill.desc}
+                  isActive={i === activeIndex}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ─── Sezione 2: Fotografia ─── */}
+      <PhotographySection />
+
+      {/* ─── Sezione 3: Stampa 3D (placeholder) ─── */}
+      <div className={styles.placeholder}>
+        <span className={styles.placeholderText}>
+          Stampa 3D — Coming soon
+        </span>
       </div>
     </section>
   );

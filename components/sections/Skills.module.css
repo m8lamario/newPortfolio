@@ -1,97 +1,249 @@
-/* Skills — grid di badge per categoria */
+/* Skills — tre sezioni verticali (Web Dev, Fotografia, Stampa 3D) */
 
+/* --- Contenitore principale --- */
+.skills {
+  position: relative;
+}
+
+/* --- Sezione generica (ognuna almeno 100vh) --- */
 .section {
-  padding: var(--section-gap) var(--container-padding);
-  max-width: var(--container-max);
-  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
 }
 
-/* --- Header --- */
-.header {
-  text-align: center;
-  margin-bottom: 3rem;
+/* ================================================
+   SEZIONE 1 — Web Dev (Scroll Highlight)
+   ================================================ */
+
+.webDev {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  min-height: 100vh;
 }
 
-.label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--text-muted);
+/* Colonna sinistra sticky (40%) */
+.stickyCol {
+  position: relative;
+  width: 40%;
+  flex-shrink: 0;
 }
 
-.title {
-  font-size: clamp(2rem, 5vw, 3rem);
+.stickyTitle {
+  position: sticky;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 2rem;
+}
+
+.stickyTitle h2 {
+  font-size: clamp(5rem, 10vw, 8rem);
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.02em;
+  line-height: 0.85;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
 }
 
-/* --- Grid --- */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+/* Colonna destra scrollabile (60%) */
+.scrollCol {
+  width: 60%;
+  flex-shrink: 0;
 }
 
-/* --- Category --- */
-.category {
+.skillList {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  padding: 50vh 2rem 50vh 0;
+  gap: 10rem;
 }
 
-.categoryTitle {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--brown-red);
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(173, 40, 49, 0.15);
-}
-
-/* --- Tags --- */
-.tags {
+/* Singola skill */
+.skillItem {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  list-style: none;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: opacity var(--duration-normal) var(--ease-out-quint);
 }
 
-.tag {
-  font-size: 0.85rem;
+.skillName {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+
+.skillDesc {
+  font-size: 1.05rem;
   color: var(--text-secondary);
-  background: rgba(37, 9, 2, 0.35);
-  border: 1px solid rgba(173, 40, 49, 0.15);
-  border-radius: 6px;
-  padding: 0.4em 0.85em;
-  cursor: default;
-  user-select: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  line-height: 1.5;
+  max-width: 36ch;
 }
 
-.tag:hover {
-  border-color: rgba(173, 40, 49, 0.5);
-  background: rgba(173, 40, 49, 0.12);
+/* ================================================
+   SEZIONE 2 — Fotografia (3D Perspective Ticker)
+   ================================================ */
+
+.photography {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Colonna sinistra — titolo verticale */
+.photoTitleCol {
+  position: relative;
+  width: 40%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photoTitle {
+  font-size: clamp(5rem, 10vw, 8rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Colonna destra — stage 3D */
+.photoStageCol {
+  width: 60%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photoStage {
+  width: 100%;
+  max-width: 700px;
+  height: 80vh;
+  overflow: hidden;
+  perspective: 900px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform: perspective(700px) rotateX(20deg);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  border-radius: 4px;
+}
+
+.photoTrack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: perspective(900px) rotateY(-18deg);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.photoRow {
+  display: flex;
+  gap: 8px;
+  height: 280px;
+  flex-shrink: 0;
+}
+
+.photoCard {
+  flex: 1;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--dark-wine);
+  background-size: cover;
+  background-position: center;
+  cursor: default;
+}
+
+.photoCard:hover {
+  transform: scale(1.03) rotateY(0deg);
+}
+
+/* ================================================
+   SEZIONE 3 — Placeholder
+   ================================================ */
+
+.placeholder {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholderText {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
 }
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+  .webDev {
+    flex-direction: column;
   }
 
-  .header {
-    margin-bottom: 2rem;
+  .stickyCol {
+    width: 100%;
+    min-height: auto;
   }
 
-  .tag {
-    font-size: 0.8rem;
+  .stickyTitle {
+    position: relative;
+    top: auto;
+    transform: none;
+    padding: 3rem 1.5rem 1.5rem;
+  }
+
+  .stickyTitle h2 {
+    font-size: 2.2rem;
+    writing-mode: horizontal-tb;
+  }
+
+  .scrollCol {
+    width: 100%;
+  }
+
+  .skillList {
+    padding: 2rem 1.5rem 4rem;
+    gap: 5rem;
+  }
+
+  .skillName {
+    font-size: 1.8rem;
+  }
+
+  .photography {
+    flex-direction: column;
+  }
+
+  .photoTitleCol {
+    width: 100%;
+    min-height: auto;
+    padding: 3rem 1.5rem 1.5rem;
+  }
+
+  .photoTitle {
+    font-size: 2.2rem;
+    writing-mode: horizontal-tb;
+  }
+
+  .photoStageCol {
+    width: 100%;
+    padding: 0 1.5rem 3rem;
+  }
+
+  .photoStage {
+    width: 100%;
+    max-width: 400px;
+    height: 60vh;
+  }
+
+  .photoRow {
+    height: 280px;
   }
 }

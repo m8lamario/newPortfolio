@@ -1,0 +1,66 @@
+/* ============================================
+   Loader.module.css — Preloader full-screen
+   Design minimalista stile premium
+   ============================================ */
+
+/* --- Overlay full-screen --- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+/* --- Logo / Iniziali --- */
+.logo {
+  font-family: var(--font-primary);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  margin-bottom: 2rem;
+  user-select: none;
+}
+
+.logoAccent {
+  color: var(--brown-red);
+}
+
+/* --- Progress bar container --- */
+.progressContainer {
+  width: min(280px, 70vw);
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+/* --- Progress bar fill --- */
+.progressFill {
+  height: 100%;
+  background: var(--brown-red);
+  border-radius: 2px;
+  transition: width 0.4s var(--ease-out-quint);
+}
+
+/* --- Percentuale numerica --- */
+.progressText {
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* --- Block scroll sul body --- */
+.bodyLocked {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
