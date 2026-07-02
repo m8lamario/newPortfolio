@@ -35,16 +35,6 @@
   padding: 4rem;
 }
 
-.stickyTitle h2 {
-  font-size: clamp(5rem, 10vw, 8rem);
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
-  line-height: 0.85;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-}
-
 /* Colonna destra scrollabile (60%) */
 .scrollCol {
   width: 60%;
@@ -96,7 +86,6 @@
   top: 0;
   height: 100vh;
   display: flex;
-  overflow: hidden;
 }
 
 /* Colonna sinistra — titolo verticale */
@@ -108,16 +97,8 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-}
-
-.photoTitle {
-  font-size: clamp(5rem, 10vw, 8rem);
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
-  line-height: 0.85;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+  overflow: visible;
+  z-index: 2;
 }
 
 /* Colonna destra — stage 3D */
@@ -179,25 +160,6 @@
   transition: transform 0.3s ease-out;
 }
 
-/* ================================================
-   SEZIONE 3 — Placeholder
-   ================================================ */
-
-.placeholder {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.placeholderText {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-}
-
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .webDev {
@@ -214,11 +176,6 @@
     top: auto;
     transform: none;
     padding: 3rem 1.5rem 1.5rem;
-  }
-
-  .stickyTitle h2 {
-    font-size: 2.2rem;
-    writing-mode: horizontal-tb;
   }
 
   .scrollCol {
@@ -246,11 +203,6 @@
     width: 100%;
     min-height: auto;
     padding: 4rem 1.5rem 1.5rem;
-  }
-
-  .photoTitle {
-    font-size: 2.2rem;
-    writing-mode: horizontal-tb;
   }
 
   .photoStageCol {

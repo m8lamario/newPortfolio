@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useGridContext } from "@/components/background/GridContext";
-import { PIXEL_CHARS } from "@/lib/pixelFont";
+import { buildLayout, type RectData } from "@/lib/pixelFont";
 import styles from "./PixelTitle.module.css";
 
 /* ============================================
@@ -23,60 +23,25 @@ const LERP_SPEED = 0.07;
 const GLOW_RADIUS = 200;
 
 /* ============================================
-   Tipi
+   Tipi e Helpers
    ============================================ */
 
-interface RectData {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  cx: number;
-  cy: number;
+interface RectDataWithDelay extends RectData {
   delay: number;
 }
-
-/* ============================================
-   Helpers
-   ============================================ */
 
 function lerp(a: number, b: number, t: number): number {
   return a + (b - a) * t;
 }
 
-function buildLayout(text: string): {
-  rects: RectData[];
+function buildLayoutWithDelays(text: string): {
+  rects: RectDataWithDelay[];
   totalCols: number;
   totalRows: number;
 } {
-  const rects: RectData[] = [];
-  let col = 0;
-  const totalRows = 7;
-
-  for (const char of text) {
-    const def = PIXEL_CHARS[char];
-    if (!def) {
-      col += 3 + CHAR_GAP;
-      continue;
-    }
-
-    for (const [px, py] of def.pixels) {
-      const x = (col + px) * PIXEL_UNIT;
-      const y = py * PIXEL_UNIT;
-      rects.push({
-        x,
-        y,
-        w: PIXEL_UNIT,
-        h: PIXEL_UNIT,
-        cx: x + PIXEL_UNIT / 2,
-        cy: y + PIXEL_UNIT / 2,
-        delay: Math.random() * REVEAL_DURATION,
-      });
-    }
-    col += def.width + CHAR_GAP;
-  }
-
-  return { rects, totalCols: col - CHAR_GAP, totalRows };
+  const { rects: base, totalCols, totalRows } = buildLayout(text, PIXEL_UNIT, CHAR_GAP);
+  const rects = base.map((r) => ({ ...r, delay: Math.random() * REVEAL_DURATION }));
+  return { rects, totalCols, totalRows };
 }
 
 /* ============================================
@@ -90,7 +55,7 @@ export default function PixelTitle() {
   const animFrameRef = useRef<number>(0);
   const { mouseRef } = useGridContext();
   const [revealed, setRevealed] = useState(false);
-  const [layout] = useState(() => buildLayout(TITLE));
+  const [layout] = useState(() => buildLayoutWithDelays(TITLE));
 
   // Inizializza scale array
   useEffect(() => {

@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { buildLayout } from "@/lib/pixelFont";
 import styles from "./Skills.module.css";
 
 /* ── Dati skill Web Dev ── */
@@ -39,6 +40,37 @@ function chunk<T>(arr: T[], size: number): T[][] {
   return result;
 }
 
+/* ── PixelLabel — titolo a quadratini SVG, ruotato di 90° ── */
+function PixelLabel({ text, style }: { text: string; style?: React.CSSProperties }) {
+  const layout = buildLayout(text, 0.55, 1);
+  return (
+    <svg
+      viewBox={`0 0 ${layout.totalCols} ${layout.totalRows}`}
+      preserveAspectRatio="xMidYMid meet"
+      aria-label={text}
+      style={{
+        display: "block",
+        height: "60vh",
+        transform: "rotate(90deg)",
+        transformOrigin: "center center",
+        ...style,
+      }}
+    >
+      {layout.rects.map((r, i) => (
+        <rect
+          key={i}
+          x={r.x}
+          y={r.y}
+          width={r.w}
+          height={r.h}
+          rx={0.12}
+          fill="var(--brown-red)"
+        />
+      ))}
+    </svg>
+  );
+}
+
 /* ── Singola voce skill ── */
 function SkillItem({
   name,
@@ -68,6 +100,96 @@ function SkillItem({
       </span>
       <span className={styles.skillDesc}>{desc}</span>
     </motion.div>
+  );
+}
+
+/* ── Sezione Stampa 3D (Infinite Scroll Words) ── */
+const TD_ROWS = [
+  { word: "IDEA",      from: "-20%", to: "20%" },
+  { word: "SKETCH",    from: "20%",  to: "-20%" },
+  { word: "CAD",       from: "-18%", to: "18%" },
+  { word: "MODELING",  from: "18%",  to: "-18%" },
+  { word: "SLICING",   from: "-16%", to: "16%" },
+  { word: "PRINTING",  from: "16%",  to: "-16%" },
+  { word: "TESTING",   from: "-14%", to: "14%" },
+  { word: "ITERATION", from: "14%",  to: "-14%" },
+] as const;
+
+const SPANS_PER_ROW = 12; // abbastanza per coprire qualsiasi larghezza schermo
+
+function ThreeDPrintSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  const isInView = useInView(containerRef, { amount: 0.2 });
+
+  const { scrollYProgress } = useScroll();
+
+  const transforms = TD_ROWS.map((r) =>
+    useTransform(scrollYProgress, [0, 1], [r.from, r.to])
+  );
+
+  const baseStyle: React.CSSProperties = {
+    fontSize: "clamp(3rem, 6vw, 5rem)",
+    fontWeight: 800,
+    textTransform: "uppercase",
+    whiteSpace: "nowrap",
+    letterSpacing: "0.02em",
+    display: "inline-block",
+  };
+
+  const filledStyle: React.CSSProperties = {
+    ...baseStyle,
+    color: "var(--brown-red)",
+  };
+
+  const outlineStyle: React.CSSProperties = {
+    ...baseStyle,
+    color: "transparent",
+    WebkitTextStroke: "1px var(--brown-red)",
+  };
+
+  return (
+    <section
+      ref={containerRef}
+      style={{
+        minHeight: "100vh",
+        position: "relative",
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        opacity: isInView ? 1 : 0.6,
+        transition: "opacity 0.6s ease-out",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "clamp(0.75rem, 2vw, 1.25rem)",
+          width: "100%",
+        }}
+      >
+        {TD_ROWS.map((row, rowIdx) => (
+          <motion.div
+            key={row.word}
+            style={{
+              x: transforms[rowIdx],
+              display: "flex",
+              whiteSpace: "nowrap",
+              willChange: "transform",
+            }}
+          >
+            {Array.from({ length: SPANS_PER_ROW }, (_, i) => (
+              <span
+                key={i}
+                style={i % 2 === 0 ? filledStyle : outlineStyle}
+              >
+                {row.word}&nbsp;
+              </span>
+            ))}
+          </motion.div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -121,7 +243,7 @@ function PhotographySection() {
       <div className={styles.photographyInner}>
         {/* Colonna sinistra — titolo */}
         <div className={styles.photoTitleCol}>
-          <h2 className={styles.photoTitle}>Fotografia</h2>
+          <PixelLabel text="FOTOGRAFIA" style={{ opacity: 0.25 }} />
         </div>
 
         {/* Colonna destra — stage 3D */}
@@ -193,7 +315,7 @@ export default function Skills() {
       <div className={styles.webDev}>
         <div className={styles.stickyCol}>
           <div className={styles.stickyTitle}>
-            <h2>Web Dev</h2>
+            <PixelLabel text="WEB DEV" style={{ opacity: 0.25 }} />
           </div>
         </div>
 
@@ -220,12 +342,8 @@ export default function Skills() {
       {/* ─── Sezione 2: Fotografia ─── */}
       <PhotographySection />
 
-      {/* ─── Sezione 3: Stampa 3D (placeholder) ─── */}
-      <div className={styles.placeholder}>
-        <span className={styles.placeholderText}>
-          Stampa 3D — Coming soon
-        </span>
-      </div>
+      {/* ─── Sezione 3: Stampa 3D ─── */}
+      <ThreeDPrintSection />
     </section>
   );
 }
