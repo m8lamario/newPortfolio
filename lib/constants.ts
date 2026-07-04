@@ -81,6 +81,20 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
 // --- Experience ---
 export const EXPERIENCES: Experience[] = [
   {
+    role: "Stagista",
+    company: "Trim Informatica",
+    period: "Estate 2025",
+    description:
+        "Prima esperienza lavorativa in ambito IT, contatto con ambienti professionali e processi aziendali.",
+  },
+  {
+    role: "Web Developer / IT",
+    company: "G&B & LCS",
+    period: "Inverno 2025",
+    description:
+        "Sviluppo di software e strumenti interni per ottimizzare i processi aziendali. Collaborazione con LCS per la piattaforma estudentsleague.com.",
+  },
+  {
     role: "Stagista (retribuito)",
     company: "G&B",
     period: "Estate 2026",
@@ -88,19 +102,11 @@ export const EXPERIENCES: Experience[] = [
       "Stage retribuito in contesto professionale. Continuazione del lavoro su tool interni e sviluppo web.",
   },
   {
-    role: "Web Developer / IT",
-    company: "G&B & LCS",
-    period: "Inverno 2025",
-    description:
-      "Sviluppo di software e strumenti interni per ottimizzare i processi aziendali. Collaborazione con LCS per la piattaforma estudentsleague.com.",
-  },
-  {
-    role: "Stagista",
-    company: "Trim Informatica",
-    period: "Estate 2025",
-    description:
-      "Prima esperienza lavorativa in ambito IT, contatto con ambienti professionali e processi aziendali.",
-  },
+    role: "Studente",
+    company: "ITIS CASTELLI",
+    period: "2022 - Presente",
+    description: "Studente di informatica presso ITIS Castelli, approfondendo sviluppo software, reti e sistemi.",
+  }
 ];
 
 // --- Projects ---

@@ -1,0 +1,378 @@
+/* ============================================
+   Experience — timeline verticale con animazioni
+   ============================================ */
+
+/* --- Layout principale --- */
+.section {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* --- Colonna sinistra: PixelLabel --- */
+.labelCol {
+  position: relative;
+  width: 25%;
+  flex-shrink: 0;
+}
+
+.stickyLabel {
+  position: sticky;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 4rem 2rem 4rem 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* --- Colonna destra: contenuto --- */
+.contentCol {
+  width: 75%;
+  flex-shrink: 0;
+  padding: 8rem 4rem 0 0;
+}
+
+/* ================================================
+   Header
+   ================================================ */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 4rem;
+}
+
+.sectionLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brown-red);
+}
+
+.sectionTitle {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.sectionSubtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 40ch;
+}
+
+/* ================================================
+   Timeline Layout
+   ================================================ */
+.timeline {
+  display: flex;
+  position: relative;
+}
+
+/* --- Colonna barra (assoluta, non influenza il flow) --- */
+.timelineBarCol {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- Barra timeline --- */
+.timelineBar {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+}
+
+.timelineTrack {
+  position: absolute;
+  inset: 0;
+  background: rgba(173, 40, 49, 0.15);
+  border-radius: 1px;
+}
+
+.timelineFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--brown-red),
+    var(--dark-wine)
+  );
+  border-radius: 1px;
+  box-shadow: 0 0 12px rgba(173, 40, 49, 0.4);
+}
+
+/* --- Righe timeline (dot + card allineati) --- */
+.timelineRows {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
+  padding-left: 40px;
+}
+
+.timelineRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 3rem;
+}
+
+.timelineDotCol {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.timelineCardCol {
+  flex: 1;
+  min-width: 0;
+}
+
+/* --- Dot --- */
+.dotWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dotRing {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid var(--brown-red);
+}
+
+.dot {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(173, 40, 49, 0.12);
+  border: 2px solid rgba(173, 40, 49, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease-out;
+}
+
+.dotActive {
+  background: rgba(173, 40, 49, 0.2);
+  border-color: var(--brown-red);
+  box-shadow: 0 0 16px rgba(173, 40, 49, 0.25);
+}
+
+.dotIndex {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--brown-red);
+  line-height: 1;
+}
+
+/* ================================================
+   Card
+   ================================================ */
+.card {
+  position: relative;
+  padding: 2rem 2rem 2rem 2.5rem;
+  background: rgba(37, 9, 2, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(173, 40, 49, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+
+.card:hover {
+  border-color: rgba(173, 40, 49, 0.25);
+  box-shadow: 0 8px 32px rgba(173, 40, 49, 0.08);
+}
+
+/* Glow decorativo in basso */
+.cardGlow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(173, 40, 49, 0.3),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.card:hover .cardGlow {
+  opacity: 1;
+}
+
+/* --- Badge periodo --- */
+.periodBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 0.25em 0.75em;
+  background: rgba(173, 40, 49, 0.08);
+  border: 1px solid rgba(173, 40, 49, 0.15);
+  border-radius: 4px;
+  align-self: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.periodDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brown-red);
+  animation: periodPulse 2s ease-in-out infinite;
+}
+
+@keyframes periodPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+/* --- Ruolo --- */
+.role {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+/* --- Azienda --- */
+.company {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--brown-red);
+  letter-spacing: 0.06em;
+}
+
+/* --- Separatore --- */
+.separator {
+  width: 40px;
+  height: 1px;
+  background: rgba(173, 40, 49, 0.2);
+  margin: 0.25rem 0 0.25rem;
+}
+
+/* --- Descrizione --- */
+.description {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 50ch;
+}
+
+/* ================================================
+   Responsive
+   ================================================ */
+@media (max-width: 1024px) {
+  .labelCol {
+    width: 20%;
+  }
+
+  .stickyLabel {
+    padding: 4rem 1rem 4rem 2rem;
+  }
+
+  .contentCol {
+    width: 80%;
+    padding: 6rem 2rem 6rem 0;
+  }
+
+  .timelineRow {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    flex-direction: column;
+  }
+
+  .labelCol {
+    display: none;
+  }
+
+  .contentCol {
+    width: 100%;
+    padding: 4rem 1.5rem 4rem;
+  }
+
+  .timelineRows {
+    padding-left: 28px;
+    gap: 2rem;
+  }
+
+  .timelineRow {
+    gap: 1rem;
+  }
+
+  .timelineBarCol {
+    width: 28px;
+  }
+
+  .dot {
+    width: 28px;
+    height: 28px;
+  }
+
+  .dotIndex {
+    font-size: 0.55rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+    gap: 0.35rem;
+  }
+
+  .role {
+    font-size: 1.15rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+    max-width: none;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+}
