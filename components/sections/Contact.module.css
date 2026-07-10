@@ -1,0 +1,255 @@
+/* ============================================
+   Contact — full-width, modern, bold
+   ============================================ */
+
+/* --- Layout --- */
+.section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 6rem var(--container-padding) 4rem;
+  display: flex;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+/* ================================================
+   Left Column — Text + Email CTA
+   ================================================ */
+.leftCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brown-red);
+}
+
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.35em;
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  max-width: 14ch;
+}
+
+.word {
+  display: inline-block;
+  perspective: 400px;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 44ch;
+}
+
+/* Email CTA */
+.emailBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--brown-red);
+  padding: 0.85em 1.8em;
+  border: 1px solid var(--brown-red);
+  border-radius: 10px;
+  background: rgba(173, 40, 49, 0.06);
+  overflow: hidden;
+  text-decoration: none;
+  transition: background 0.3s ease-out;
+  margin-top: 0.5rem;
+}
+
+.emailBtn:hover {
+  background: rgba(173, 40, 49, 0.12);
+}
+
+.emailGlow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    var(--brown-red),
+    transparent 60%,
+    transparent
+  );
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease-out;
+}
+
+.emailBtn:hover .emailGlow {
+  opacity: 0.15;
+}
+
+/* ================================================
+   Right Column — Social links
+   ================================================ */
+.rightCol {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 0.3rem;
+}
+
+.socialHeading {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.socialList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Social row — interactive horizontal link */
+.socialRow {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease-out, background 0.3s ease-out, color 0.3s ease-out;
+}
+
+.socialRow:hover {
+  color: var(--text-primary);
+  border-color: rgba(173, 40, 49, 0.2);
+  background: rgba(173, 40, 49, 0.05);
+}
+
+.socialIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.socialLabel {
+  font-size: 0.95rem;
+  font-weight: 500;
+  flex: 1;
+}
+
+.socialArrow {
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  color: var(--brown-red);
+}
+
+.socialRow:hover .socialArrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ================================================
+   Pixel decorativi
+   ================================================ */
+.pixels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pixel {
+  position: absolute;
+  border-radius: 2px;
+  background: var(--brown-red);
+}
+
+/* ================================================
+   Footer
+   ================================================ */
+.footer {
+  text-align: center;
+  padding: 2rem var(--container-padding) 3rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+/* ================================================
+   Responsive
+   ================================================ */
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    gap: 3rem;
+    padding: 4rem var(--container-padding) 2rem;
+  }
+
+  .heading {
+    font-size: clamp(2rem, 7vw, 3rem);
+  }
+
+  .rightCol {
+    width: 100%;
+  }
+
+  .socialRow {
+    padding: 0.7rem 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 3rem 1.5rem 2rem;
+  }
+
+  .heading {
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
+  }
+
+  .subtitle {
+    font-size: 0.92rem;
+  }
+
+  .emailBtn {
+    font-size: 0.85rem;
+    padding: 0.75em 1.4em;
+  }
+
+  .footer {
+    padding: 1.5rem 1.5rem 2.5rem;
+  }
+}
+

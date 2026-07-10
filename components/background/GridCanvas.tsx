@@ -14,6 +14,7 @@ export default function GridCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const squaresRef = useRef<Square[]>([]);
   const animFrameRef = useRef<number>(0);
+  const pendingMouseRef = useRef<{ x: number; y: number } | null>(null);
   const { mouseRef, configRef } = useGridContext();
 
   useEffect(() => {
@@ -31,12 +32,20 @@ export default function GridCanvas() {
       squaresRef.current = buildSquares(canvas.width, canvas.height, config);
     }
 
+    // Throttled mouse handler — aggiorni solo una volta per frame
     function handleMouseMove(e: MouseEvent) {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+      pendingMouseRef.current = { x: e.clientX, y: e.clientY };
     }
 
     function animate() {
       if (!ctx || !canvas) return;
+
+      // Applica l'ultima posizione mouse pendente (throttled a ~60fps)
+      if (pendingMouseRef.current) {
+        mouseRef.current = pendingMouseRef.current;
+        pendingMouseRef.current = null;
+      }
+
       renderGridFrame(
         ctx,
         squaresRef.current,
@@ -49,7 +58,7 @@ export default function GridCanvas() {
 
     resize();
     window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     animFrameRef.current = requestAnimationFrame(animate);
 
     return () => {

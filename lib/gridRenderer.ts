@@ -23,14 +23,15 @@ export interface Square {
 
 export function getConfig(width: number): GridConfig {
   const isMobile = width < 768;
+  const isTablet = width < 1024;
   return {
-    cellSize: isMobile ? 20 : 15,
-    squareRatio: 0.5,
+    cellSize: isMobile ? 28 : isTablet ? 20 : 15,
+    squareRatio: isMobile ? 0.35 : 0.5,
     maxScale: 1.5,
     minScale: 0,
-    falloff: 0.004,
+    falloff: isMobile ? 0.003 : 0.004,
     lerpSpeed: 0.07,
-    glowRadius: 100,
+    glowRadius: isMobile ? 80 : 100,
   };
 }
 

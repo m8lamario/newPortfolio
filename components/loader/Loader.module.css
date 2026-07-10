@@ -1,6 +1,6 @@
 /* ============================================
    Loader.module.css — Preloader full-screen
-   Design minimalista stile premium
+   Design coerente: griglia animata + pixel font + glow
    ============================================ */
 
 /* --- Overlay full-screen --- */
@@ -9,52 +9,89 @@
   inset: 0;
   z-index: 9999;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--bg-primary);
+  background: #0a0a0a;
   overflow: hidden;
 }
 
-/* --- Logo / Iniziali --- */
-.logo {
-  font-family: var(--font-primary);
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: 0.04em;
-  margin-bottom: 2rem;
-  user-select: none;
+/* --- Canvas background --- */
+.bgCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
-.logoAccent {
-  color: var(--brown-red);
+/* --- Contenuto centrale --- */
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
 }
 
-/* --- Progress bar container --- */
-.progressContainer {
-  width: min(280px, 70vw);
-  height: 2px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 2px;
-  overflow: hidden;
+/* --- Logo SVG pixel --- */
+.logoWrapper {
+  position: relative;
 }
 
-/* --- Progress bar fill --- */
+.pixelSvg {
+  display: block;
+  width: clamp(160px, 35vw, 260px);
+  height: auto;
+}
+
+/* --- Progress area --- */
+.progressArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.progressTrack {
+  position: relative;
+  width: clamp(200px, 50vw, 340px);
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  overflow: visible;
+}
+
 .progressFill {
   height: 100%;
   background: var(--brown-red);
-  border-radius: 2px;
-  transition: width 0.4s var(--ease-out-quint);
+  border-radius: 3px;
+  transition: width 0.3s var(--ease-out-quint);
+  position: relative;
+  z-index: 1;
 }
 
-/* --- Percentuale numerica --- */
+/* Shimmer animato sopra la barra */
+.progressFill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(
+    to left,
+    rgba(173, 40, 49, 0.8),
+    transparent
+  );
+  border-radius: 3px;
+}
+
 .progressText {
-  margin-top: 0.75rem;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--text-muted);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -63,4 +100,5 @@
   overflow: hidden !important;
   touch-action: none;
 }
+
 
