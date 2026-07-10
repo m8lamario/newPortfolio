@@ -1,0 +1,359 @@
+/* ============================================
+   Projects — grid di card con animazioni
+   ============================================ */
+
+/* --- Layout principale --- */
+.section {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  padding-bottom: 6rem;
+}
+
+/* --- Colonna sinistra: PixelLabel --- */
+.labelCol {
+  position: relative;
+  width: 25%;
+  flex-shrink: 0;
+}
+
+.stickyLabel {
+  position: sticky;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 4rem 2rem 4rem 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* --- Colonna destra: contenuto --- */
+.contentCol {
+  width: 75%;
+  flex-shrink: 0;
+  padding: 8rem 4rem 0 0;
+}
+
+/* ================================================
+   Header
+   ================================================ */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 4rem;
+}
+
+.sectionLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brown-red);
+}
+
+.sectionTitle {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.sectionSubtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 40ch;
+}
+
+/* ================================================
+   Grid
+   ================================================ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+/* ================================================
+   Card
+   ================================================ */
+.card {
+  position: relative;
+  padding: 2rem 2rem 2rem 2.5rem;
+  background: rgba(37, 9, 2, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(173, 40, 49, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color 0.4s ease-out, box-shadow 0.4s ease-out, transform 0.3s ease-out;
+}
+
+.card:hover {
+  border-color: rgba(173, 40, 49, 0.25);
+  box-shadow: 0 12px 40px rgba(173, 40, 49, 0.08);
+  transform: translateY(-4px);
+}
+
+/* Glow decorativo in basso */
+.cardGlow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(173, 40, 49, 0.3),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.card:hover .cardGlow {
+  opacity: 1;
+}
+
+/* --- Anno badge --- */
+.yearBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 0.25em 0.75em;
+  background: rgba(173, 40, 49, 0.08);
+  border: 1px solid rgba(173, 40, 49, 0.15);
+  border-radius: 4px;
+  align-self: flex-start;
+  margin-bottom: 0.25rem;
+}
+
+.yearDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brown-red);
+  animation: yearPulse 2s ease-in-out infinite;
+}
+
+@keyframes yearPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+/* --- Titolo --- */
+.cardTitle {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+/* --- Descrizione --- */
+.cardDesc {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+/* --- Stack --- */
+.stackRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.stackLabel {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 0.15em 0.5em;
+  background: rgba(173, 40, 49, 0.06);
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.stackValue {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+/* --- Tags --- */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brown-red);
+  padding: 0.2em 0.65em;
+  background: rgba(173, 40, 49, 0.08);
+  border: 1px solid rgba(173, 40, 49, 0.15);
+  border-radius: 3px;
+  transition: background 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+.tag:hover {
+  background: rgba(173, 40, 49, 0.15);
+  border-color: rgba(173, 40, 49, 0.3);
+}
+
+/* --- Links --- */
+.links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.linkBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 0.35em 0.85em;
+  border: 1px solid rgba(173, 40, 49, 0.2);
+  border-radius: 6px;
+  background: rgba(173, 40, 49, 0.05);
+  transition: all 0.25s ease-out;
+  cursor: pointer;
+}
+
+.linkBtn:hover {
+  color: var(--brown-red);
+  border-color: var(--brown-red);
+  background: rgba(173, 40, 49, 0.12);
+  transform: translateY(-1px);
+}
+
+/* ================================================
+   Toggle "altri progetti"
+   ================================================ */
+.toggleWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.toggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 0.6em 1.5em;
+  border: 1px solid rgba(173, 40, 49, 0.15);
+  border-radius: 6px;
+  background: rgba(37, 9, 2, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+
+.toggleBtn:hover {
+  color: var(--brown-red);
+  border-color: rgba(173, 40, 49, 0.35);
+  background: rgba(173, 40, 49, 0.08);
+}
+
+.toggleLabel {
+  display: inline-block;
+}
+
+/* ================================================
+   Responsive
+   ================================================ */
+@media (max-width: 1024px) {
+  .labelCol {
+    width: 20%;
+  }
+
+  .stickyLabel {
+    padding: 4rem 1rem 4rem 2rem;
+  }
+
+  .contentCol {
+    width: 80%;
+    padding: 6rem 2rem 6rem 0;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    flex-direction: column;
+  }
+
+  .labelCol {
+    display: none;
+  }
+
+  .contentCol {
+    width: 100%;
+    padding: 4rem 1.5rem 4rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+    gap: 0.5rem;
+  }
+
+  .cardTitle {
+    font-size: 1.15rem;
+  }
+
+  .cardDesc {
+    font-size: 0.88rem;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .links {
+    flex-wrap: wrap;
+  }
+}
