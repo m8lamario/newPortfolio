@@ -89,12 +89,23 @@
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .hero {
-    padding: 1.5rem 1.5rem 2.5rem;
+    min-height: 100svh;
+    padding: 1.5rem var(--container-padding) 2.5rem;
   }
 
   .scrollIndicator {
     right: 1.5rem;
     bottom: 2rem;
+  }
+
+  .scrambleText {
+    font-size: clamp(0.78rem, 3.4vw, 1rem);
+    line-height: 1.5;
+  }
+
+  .ctas {
+    gap: 0.75rem;
+    margin-top: 1.25rem;
   }
 }
 
@@ -104,6 +115,12 @@
   }
 
   .ctas {
-    gap: 0.75rem;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ctas > * {
+    width: 100%;
   }
 }

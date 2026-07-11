@@ -16,6 +16,7 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  min-height: 44px;
 }
 
 .button:active {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { usePreload } from "./usePreload";
 import Loader from "./Loader";
 import styles from "./Loader.module.css";
@@ -47,27 +47,30 @@ export default function Preloader({ children }: PreloaderProps) {
     onReady: handleReady,
   });
 
-  // Blocca/sblocca scroll sul body
   useEffect(() => {
     if (!isReady) {
       document.body.classList.add(styles.bodyLocked);
-      return () => {
-        document.body.classList.remove(styles.bodyLocked);
-      };
-    } else {
-      document.body.classList.remove(styles.bodyLocked);
+      document.body.dataset.preloaderReady = "false";
+      return () => document.body.classList.remove(styles.bodyLocked);
     }
+
+    document.body.classList.remove(styles.bodyLocked);
+    document.body.dataset.preloaderReady = "true";
+    window.dispatchEvent(new Event("portfolio:ready"));
+
+    return () => {
+      delete document.body.dataset.preloaderReady;
+    };
   }, [isReady]);
 
   return (
     <>
       <Loader progress={progress} isVisible={!isReady} />
 
-      {/* Fade-in del contenuto dopo che il loader è sparito */}
       <div
         style={{
           opacity: isReady ? 1 : 0,
-          transition: "opacity 0.6s ease-out",
+          transition: "opacity 0.35s ease-out",
         }}
       >
         {children}

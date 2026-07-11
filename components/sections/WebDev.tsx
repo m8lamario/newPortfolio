@@ -2,19 +2,16 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
+import { SKILL_CATEGORIES } from "@/lib/constants";
 import styles from "./WebDev.module.css";
 
 /* ── Dati ── */
-const TECH_SKILLS = [
-  { name: "Next.js", desc: "Framework React per applicazioni web moderne" },
-  { name: "TypeScript", desc: "Tipizzazione statica per codice più solido" },
-  { name: "React", desc: "Componenti UI dinamici e reattivi" },
-  { name: "Prisma", desc: "ORM per database relazionali" },
-  { name: "SQL", desc: "Query e gestione database" },
-  { name: "CSS Modules", desc: "Stili scoped e manutenibili" },
-  { name: "Node.js", desc: "Runtime JavaScript lato server" },
-  { name: "REST API", desc: "Progettazione e consumo di API" },
-];
+const TECH_SKILLS = SKILL_CATEGORIES.flatMap((category) =>
+  category.skills.map((skill) => ({
+    name: skill.name,
+    desc: `${category.title} — competenza tecnica`,
+  }))
+);
 
 /* ── Skill item ── */
 function SkillItem({ name, desc, isActive }: { name: string; desc: string; isActive: boolean }) {
@@ -111,6 +108,27 @@ export default function WebDev() {
               ref={(el) => { itemRefs.current[i] = el; }}
             >
               <SkillItem name={skill.name} desc={skill.desc} isActive={i === activeIndex} />
+            </div>
+          ))}
+        </div>
+        <div className={styles.mobileSkillGroups}>
+          {SKILL_CATEGORIES.map((category) => (
+            <div className={styles.skillGroup} key={category.title}>
+              <h3 className={styles.skillGroupTitle}>{category.title}</h3>
+              <div className={styles.chips}>
+                {category.skills.map((skill, index) => (
+                  <motion.span
+                    className={styles.chip}
+                    key={skill.name}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.7 }}
+                    transition={{ duration: 0.3, delay: index * 0.04 }}
+                  >
+                    {skill.name}
+                  </motion.span>
+                ))}
+              </div>
             </div>
           ))}
         </div>

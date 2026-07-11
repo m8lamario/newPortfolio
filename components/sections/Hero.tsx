@@ -104,7 +104,7 @@ export default function Hero() {
         className={styles.scrambleWrapper}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 2.2 }}
+        transition={{ duration: 0.35, delay: 0.15 }}
       >
         <span className={styles.scrambleText}>
           {displayText}
@@ -117,7 +117,7 @@ export default function Hero() {
         className={styles.ctas}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 2.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.45, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
       >
         <Button href="#projects">Vedi i progetti</Button>
         <Button variant="secondary" href="#contact">
@@ -130,7 +130,7 @@ export default function Hero() {
         className={styles.scrollIndicator}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 3.2, duration: 0.8 }}
+        transition={{ delay: 0.7, duration: 0.45 }}
       >
         <span className={styles.scrollLine} />
       </motion.div>

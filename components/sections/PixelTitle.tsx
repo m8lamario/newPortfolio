@@ -79,6 +79,20 @@ export default function PixelTitle() {
     if (!svg) return;
 
     let running = true;
+    const touchQuery = window.matchMedia("(pointer: coarse)");
+    let isTouch = touchQuery.matches;
+
+    if (isTouch) {
+      layout.rects.forEach((r, i) => {
+        const rect = rectRefs.current.get(i);
+        if (!rect) return;
+        rect.style.transform = `scale(${MAX_SCALE})`;
+        rect.style.transformOrigin = `${r.cx}px ${r.cy}px`;
+        rect.style.transformBox = "fill-box";
+        rect.setAttribute("opacity", "1");
+      });
+      return;
+    }
 
     function animate() {
       if (!running || !svg) return;
@@ -87,7 +101,7 @@ export default function PixelTitle() {
       const localMouseX = mouseRef.current.x - svgRect.left;
       const localMouseY = mouseRef.current.y - svgRect.top;
 
-      // Converti da pixel CSS a unità viewBox SVG
+      // Su touch il titolo resta leggibile senza dipendere da un cursore.
       const scaleX = layout.totalCols / svgRect.width;
       const scaleY = layout.totalRows / svgRect.height;
       const svgMouseX = localMouseX * scaleX;

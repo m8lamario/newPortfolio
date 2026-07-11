@@ -20,6 +20,9 @@ export function GridProvider({ children }: { children: ReactNode }) {
     falloff: 0.0025,
     lerpSpeed: 0.07,
     glowRadius: 350,
+    autonomousAmplitude: 0,
+    autonomousSpeed: 0,
+    pulseStrength: 0,
   });
 
   return (

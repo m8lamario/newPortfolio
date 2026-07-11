@@ -217,7 +217,7 @@
 
   .contentCol {
     width: 100%;
-    padding: 4rem 1.5rem 4rem;
+    padding: 4rem var(--container-padding) 4rem;
   }
 
   .heading {
@@ -230,6 +230,7 @@
 
   .bio {
     font-size: 0.95rem;
+    line-height: 1.85;
   }
 
   .factsGrid {
@@ -239,6 +240,9 @@
 
   .factCard {
     padding: 1.25rem 1rem;
+    backdrop-filter: blur(var(--glass-blur-mobile));
+    -webkit-backdrop-filter: blur(var(--glass-blur-mobile));
+    box-shadow: var(--shadow-mobile);
   }
 
   .factValue {

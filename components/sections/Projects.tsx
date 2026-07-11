@@ -242,7 +242,11 @@ export default function Projects() {
         </motion.div>
 
         {/* Grid */}
-        <div className={styles.grid}>
+        <div
+          className={styles.grid}
+          aria-label="Progetti principali e altri progetti"
+          tabIndex={0}
+        >
           {visibleProjects.map((project, i) => (
             <ProjectCard key={project.title} project={project} index={i} />
           ))}

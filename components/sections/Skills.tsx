@@ -141,38 +141,80 @@ function PhotographySection() {
   const trackInnerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const isHeaderInView = useInView(headerRef, { once: true, margin: "-40px" });
+  const [columns, setColumns] = useState(3);
 
-  const firstSet = chunk(PHOTOS, 3);
-  const loopRows = chunk(PHOTOS.slice(0, 9), 3);
+  useEffect(() => {
+    const mobileQuery = window.matchMedia("(max-width: 768px)");
+    const updateColumns = () => setColumns(mobileQuery.matches ? 2 : 3);
+    updateColumns();
+    mobileQuery.addEventListener("change", updateColumns);
+    return () => mobileQuery.removeEventListener("change", updateColumns);
+  }, []);
+
+  const firstSet = chunk(PHOTOS, columns);
+  const loopRows = chunk(PHOTOS.slice(0, 9), columns);
   const allRows = [...firstSet, ...loopRows];
 
   useEffect(() => {
     const container = containerRef.current;
     const inner = trackInnerRef.current;
     if (!container || !inner) return;
-    let rafId: number;
+    let rafId = 0;
+    let isActive = true;
+    let firstSetHeight = 0;
 
     const update = () => {
+      rafId = 0;
+      if (!isActive) {
+        return;
+      }
       const rect = container.getBoundingClientRect();
       const scrollable = rect.height - window.innerHeight;
-      if (scrollable <= 0) { rafId = requestAnimationFrame(update); return; }
+      if (scrollable <= 0 || firstSetHeight <= 0) return;
       const raw = -rect.top / scrollable;
       const loopProgress = raw % 1;
-      const firstSetHeight = inner.scrollHeight / allRows.length * firstSet.length;
       const offset = -loopProgress * firstSetHeight;
       inner.style.transform = `translateY(${offset}px)`;
-      rafId = requestAnimationFrame(update);
     };
 
-    rafId = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(rafId);
-  }, [allRows.length]);
+    const scheduleUpdate = () => {
+      if (isActive && !rafId) rafId = requestAnimationFrame(update);
+    };
 
-  const outerHeight = "400vh";
+    const measure = () => {
+      firstSetHeight = (inner.scrollHeight / allRows.length) * firstSet.length;
+      scheduleUpdate();
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isActive = entry.isIntersecting && !document.hidden;
+        scheduleUpdate();
+      },
+      { rootMargin: "200px 0px" }
+    );
+    observer.observe(container);
+    const resizeObserver = new ResizeObserver(measure);
+    resizeObserver.observe(inner);
+    measure();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    const handleVisibility = () => {
+      isActive = !document.hidden;
+      scheduleUpdate();
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => {
+      observer.disconnect();
+      resizeObserver.disconnect();
+      window.removeEventListener("scroll", scheduleUpdate);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      cancelAnimationFrame(rafId);
+    };
+  }, [allRows.length]);
 
   return (
     <div className={styles.passionSection}>
-      <div ref={containerRef} className={styles.photography} style={{ height: outerHeight }}>
+      <div ref={containerRef} className={styles.photography}>
         <div className={styles.photographyInner}>
           {/* Header staggered */}
           <div ref={headerRef} className={styles.passionHeader}>
@@ -191,10 +233,13 @@ function PhotographySection() {
                 {allRows.map((row, rowIdx) => (
                   <div key={rowIdx} className={styles.photoRow}>
                     {row.map((src, colIdx) => (
-                      <div
+                      <img
                         key={colIdx}
                         className={styles.photoCard}
-                        style={{ backgroundImage: `url(${src})` }}
+                        src={src}
+                        alt=""
+                        loading={rowIdx === 0 ? "eager" : "lazy"}
+                        decoding="async"
                       />
                     ))}
                   </div>

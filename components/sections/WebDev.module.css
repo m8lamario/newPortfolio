@@ -62,6 +62,10 @@
   gap: 10rem;
 }
 
+.mobileSkillGroups {
+  display: none;
+}
+
 .skillItem {
   display: flex;
   flex-direction: column;
@@ -110,12 +114,48 @@
   }
 
   .skillList {
-    padding: 2rem 1.5rem 4rem;
-    gap: 5rem;
+    display: none;
   }
 
-  .skillName {
-    font-size: 1.8rem;
+  .mobileSkillGroups {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem var(--container-padding) 4rem;
+  }
+
+  .skillGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .skillGroupTitle {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brown-red);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0.55rem 0.8rem;
+    color: var(--text-secondary);
+    background: rgba(37, 9, 2, 0.32);
+    border: 1px solid rgba(173, 40, 49, 0.2);
+    border-radius: 999px;
+    font-size: clamp(0.78rem, 3.5vw, 0.9rem);
+    line-height: 1.2;
   }
 }
 
@@ -124,12 +164,11 @@
     padding: 2rem 1rem 1rem;
   }
 
-  .skillName {
-    font-size: 1.5rem;
+  .mobileSkillGroups {
+    padding-inline: 1rem;
   }
 
-  .skillList {
-    padding: 1.5rem 1rem 3rem;
-    gap: 4rem;
+  .chips {
+    gap: 0.45rem;
   }
 }

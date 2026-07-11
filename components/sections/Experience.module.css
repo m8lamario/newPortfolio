@@ -341,7 +341,7 @@
 
   .contentCol {
     width: 100%;
-    padding: 4rem 1.5rem 4rem;
+    padding: 4rem var(--container-padding) 4rem;
   }
 
   .timelineRows {
@@ -369,6 +369,9 @@
   .card {
     padding: 1.5rem;
     gap: 0.35rem;
+    backdrop-filter: blur(var(--glass-blur-mobile));
+    -webkit-backdrop-filter: blur(var(--glass-blur-mobile));
+    box-shadow: var(--shadow-mobile);
   }
 
   .role {
