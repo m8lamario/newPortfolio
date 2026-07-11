@@ -1,117 +1,99 @@
-/* Skills — tre sezioni verticali (Web Dev, Fotografia, Stampa 3D) */
+/* ============================================
+   Skills — Altre Passioni (Fotografia + Stampa 3D)
+   ============================================ */
 
-/* --- Contenitore principale --- */
 .skills {
   position: relative;
 }
 
-/* --- Sezione generica (ognuna almeno 100vh) --- */
-.section {
-  min-height: 100vh;
-  position: relative;
-}
-
 /* ================================================
-   SEZIONE 1 — Web Dev (Scroll Highlight)
+   Section Header
    ================================================ */
+.sectionHeader {
+  text-align: center;
+  padding: 6rem var(--container-padding) 2rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
 
-.webDev {
+.sectionLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brown-red);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.heading {
   display: flex;
-  min-height: 100vh;
-}
-
-/* Colonna sinistra sticky (40%) */
-.stickyCol {
-  position: relative;
-  width: 40%;
-  flex-shrink: 0;
-  margin-top: 17rem;
-}
-
-.stickyTitle {
-  position: sticky;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 4rem;
-}
-
-/* Colonna destra scrollabile (60%) */
-.scrollCol {
-  width: 60%;
-  flex-shrink: 0;
-}
-
-.skillList {
-  display: flex;
-  flex-direction: column;
-  padding: 50vh 2rem 50vh 0;
-  gap: 10rem;
-}
-
-/* Singola skill */
-.skillItem {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  transition: opacity var(--duration-normal) var(--ease-out-quint);
-}
-
-.skillName {
-  font-size: clamp(2.8rem, 6vw, 5rem);
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 0.35em;
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
   font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.05;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
 }
 
-.skillDesc {
+.word {
+  display: inline-block;
+  perspective: 400px;
+}
+
+.subtitle {
   font-size: 1.05rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  max-width: 36ch;
+  color: var(--text-muted);
+  line-height: 1.6;
 }
 
 /* ================================================
-   SEZIONE 2 — Fotografia (Scroll-Driven Continuous)
+   Passion Section Wrapper
    ================================================ */
+.passionSection {
+  padding: 4rem 0 2rem;
+}
 
-/* Container esterno: alto per dare spazio allo scroll */
+.passionHeader {
+  text-align: center;
+  padding: 0 var(--container-padding) 1.5rem;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.passionLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brown-red);
+}
+
+/* ================================================
+   Fotografia (Scroll-Driven Continuous)
+   ================================================ */
 .photography {
   position: relative;
-  /* height impostata inline */
 }
 
-/* Inner sticky: rimane fissato in viewport mentre si scrolla */
 .photographyInner {
   position: sticky;
   top: 0;
   height: 100vh;
   display: flex;
-}
-
-/* Colonna sinistra — titolo verticale */
-.photoTitleCol {
-  position: relative;
-  width: 20%;
-  padding: 4rem;
-  flex-shrink: 0;
-  display: flex;
   align-items: center;
-  justify-content: flex-start;
-  overflow: visible;
-  z-index: 2;
-}
-
-/* Colonna destra — stage 3D */
-.photoStageCol {
-  width: 80%;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .photoStage {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  max-width: 717px;
   height: 80vh;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
@@ -120,15 +102,12 @@
   border-radius: 4px;
 }
 
-/* Track esterno: prospettiva 3D fissa */
 .photoTrack {
   transform: perspective(700px) rotateX(20deg);
   height: 100%;
-  max-width: 700px;
-  margin-left: 13rem;
+  width: 80%;
 }
 
-/* Track interno: si muove verticalmente con lo scroll */
 .photoTrackInner {
   display: flex;
   flex-direction: column;
@@ -160,54 +139,42 @@
   transition: transform 0.3s ease-out;
 }
 
-/* --- Responsive --- */
+/* ================================================
+   Stampa 3D (Infinite Scroll Words)
+   ================================================ */
+.wordScroller {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  width: 100%;
+}
+
+/* ================================================
+   Responsive
+   ================================================ */
 @media (max-width: 768px) {
-  .webDev {
-    flex-direction: column;
-  }
-
-  .stickyCol {
-    width: 100%;
-    min-height: auto;
-  }
-
-  .stickyTitle {
-    position: relative;
-    top: auto;
-    transform: none;
-    padding: 3rem 1.5rem 1.5rem;
-  }
-
-  .scrollCol {
-    width: 100%;
-  }
-
-  .skillList {
-    padding: 2rem 1.5rem 4rem;
-    gap: 5rem;
-  }
-
-  .skillName {
-    font-size: 1.8rem;
-  }
-
-  .photography {
-    flex-direction: column;
-  }
-
-  .photographyInner {
-    flex-direction: column;
-  }
-
-  .photoTitleCol {
-    width: 100%;
-    min-height: auto;
+  .sectionHeader {
     padding: 4rem 1.5rem 1.5rem;
   }
 
-  .photoStageCol {
-    width: 100%;
-    padding: 0 1.5rem 3rem;
+  .heading {
+    font-size: clamp(1.8rem, 7vw, 2.5rem);
+  }
+
+  .subtitle {
+    font-size: 0.92rem;
+  }
+
+  .passionSection {
+    padding: 2rem 0 1rem;
+  }
+
+  .passionHeader {
+    padding: 0 1.5rem 1rem;
   }
 
   .photoStage {
@@ -217,25 +184,17 @@
   }
 
   .photoRow {
-    height: 280px;
+    height: 220px;
   }
 }
 
 @media (max-width: 375px) {
-  .stickyTitle {
-    padding: 2rem 1rem 1rem;
-  }
-
-  .skillName {
-    font-size: 1.5rem;
-  }
-
   .photoStage {
     max-width: 100%;
     height: 50vh;
   }
 
   .photoRow {
-    height: 220px;
+    height: 180px;
   }
 }

@@ -1,0 +1,135 @@
+/* ============================================
+   WebDev — tech skills scroll highlight
+   ============================================ */
+
+.section {
+  display: flex;
+  min-height: 100vh;
+  padding-bottom: 6rem;
+}
+
+/* Colonna sinistra sticky */
+.stickyCol {
+  position: relative;
+  width: 42%;
+  flex-shrink: 0;
+}
+
+.stickyInner {
+  position: sticky;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brown-red);
+}
+
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.35em;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: var(--text-primary);
+}
+
+.word {
+  display: inline-block;
+  perspective: 400px;
+}
+
+/* Colonna destra scrollabile */
+.scrollCol {
+  width: 58%;
+  flex-shrink: 0;
+}
+
+.skillList {
+  display: flex;
+  flex-direction: column;
+  padding: 30vh 2rem 15vh 0;
+  gap: 10rem;
+}
+
+.skillItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: opacity var(--duration-normal) var(--ease-out-quint);
+}
+
+.skillName {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+
+.skillDesc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 36ch;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section {
+    flex-direction: column;
+  }
+
+  .stickyCol {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .stickyInner {
+    position: relative;
+    top: auto;
+    transform: none;
+    padding: 3rem 1.5rem 1.5rem;
+  }
+
+  .heading {
+    font-size: clamp(1.8rem, 7vw, 2.4rem);
+  }
+
+  .scrollCol {
+    width: 100%;
+  }
+
+  .skillList {
+    padding: 2rem 1.5rem 4rem;
+    gap: 5rem;
+  }
+
+  .skillName {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .stickyInner {
+    padding: 2rem 1rem 1rem;
+  }
+
+  .skillName {
+    font-size: 1.5rem;
+  }
+
+  .skillList {
+    padding: 1.5rem 1rem 3rem;
+    gap: 4rem;
+  }
+}

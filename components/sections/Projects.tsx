@@ -209,6 +209,36 @@ export default function Projects() {
           }
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
+          <motion.span
+            className={styles.sectionLabel}
+            initial={{ opacity: 0, y: 10 }}
+            animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            Portfolio
+          </motion.span>
+
+          <h2 className={styles.sectionTitle}>
+            {"Cosa ho sviluppato.".split(" ").map((word, i) => (
+              <motion.span
+                key={i}
+                className={styles.word}
+                initial={{ opacity: 0, y: 30, rotateX: -30 }}
+                animate={
+                  isHeaderInView
+                    ? { opacity: 1, y: 0, rotateX: 0 }
+                    : { opacity: 0, y: 30, rotateX: -30 }
+                }
+                transition={{
+                  duration: 0.5,
+                  delay: 0.2 + i * 0.06,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
+          </h2>
         </motion.div>
 
         {/* Grid */}
