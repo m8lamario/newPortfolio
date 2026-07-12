@@ -20,6 +20,23 @@ export const metadata: Metadata = {
     description: "Building digital solutions that work.",
     type: "website",
   },
+  icons: {
+    icon: [
+      { url: "/images/logo/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/images/logo/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/images/logo/favicon.ico" },
+    ],
+    apple: [
+      { url: "/images/logo/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    other: [
+      {
+        rel: "mask-icon",
+        url: "/images/logo/favicon.ico",
+      },
+    ],
+  },
+  manifest: "/images/logo/site.webmanifest",
 };
 
 export const viewport: Viewport = {
